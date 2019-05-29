@@ -75,17 +75,50 @@ GO
 
 -------***views***-------
 
+-- retrieve data from view
+SELECT * FROM dbo.get_author_Max
+-- hidden insert, because view without check option
+INSERT INTO dbo.get_author_Max(first_name,last_name,father_name,birth_date,passport,[address])
+VALUES('James','Jaymy','Jameson','1968-07-07','PO98751','addddressss');
+-- retrieve data from view
+SELECT * FROM dbo.get_author_Max
+-- retrive data from real table 
+SELECT * FROM dbo.parent_author
+
+-- error insert, because view with check option
+INSERT INTO dbo.get_author_Max_check(first_name,last_name,father_name,birth_date,passport,[address])
+VALUES('James','Jaymy','Jameson','1968-07-07','PO908751','addddressss');
+
+-- retrieve data from views on child_book table
+SELECT * FROM dbo.get_books_of_1_edition
+-- OR
+SELECT * FROM dbo.get_books_of_1_edition_check
 
 
 -------***pair tables(person,person_second) triggers***-------
+-- (INCORRECT)insert data into person table | error reason(gender CHECK CONSTRAINT) 
+INSERT INTO dbo.person(first_name,last_name,father_name,gender,birth_date,passport)
+VALUES('Jon','Snow','Reddovych','чол','2000-02-04','KO45232');
+-- (CORRECT)insert data into person table
+INSERT INTO dbo.person(first_name,last_name,father_name,gender,birth_date,passport)
+VALUES('Jon','Snow','Reddovych','male','2000-02-04','KO45232');
+-- retrieving data from log person_second
+SELECT * FROM dbo.person_second
 
--- retrieve data from view
-SELECT * FROM dbo.get_author
+-- deleting data from person table, to fill log table person_second
+DELETE FROM dbo.person;
+-- retrieving data from log person_second
+SELECT * FROM dbo.person_second
 
-/*
--- hidden insert, because view without check option
-INSERT INTO dbo.get_author_Max(first_name,last_name,father_name,birth_date,passport,[address])
-VALUES('James',);
--- retrieve data from view
-SELECT * FROM dbo.get_author
-*/
+-- inserting data to person table
+INSERT INTO dbo.person(first_name,last_name,father_name,gender,birth_date,passport)
+VALUES('Arya','Stark','Reddivna','female','2003-02-04','KO4SD5232'),
+('Jon','Snow','Reddovych','male','2000-02-04','KO45232');
+-- retrieving data from log person_second
+SELECT * FROM dbo.person_second;
+
+-- update rows in person to fill log table person_second
+UPDATE dbo.person
+SET country='Ukraine';
+-- retrieving data from log person_second
+SELECT * FROM dbo.person_second

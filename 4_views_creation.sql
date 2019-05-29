@@ -2,14 +2,14 @@
 USE [s_matskiv_module_2];
 GO
 -- creation view for parent_author table --
-CREATE VIEW dbo.get_author(first_name,last_name,father_name,birth_date,passport,[address])
+CREATE VIEW dbo.get_author_Max(first_name,last_name,father_name,birth_date,passport,[address])
 AS
 SELECT first_name,last_name,father_name,birth_date,passport,[address]
 FROM parent_author
 WHERE first_name LIKE 'Max';
 GO
 -- creation view with check option for parent_author table --
-CREATE VIEW dbo.get_author_check(first_name,last_name,father_name,birth_date,passport,[address])
+CREATE VIEW dbo.get_author_Max_check(first_name,last_name,father_name,birth_date,passport,[address])
 AS
 SELECT first_name,last_name,father_name,birth_date,passport,[address]
 FROM parent_author
